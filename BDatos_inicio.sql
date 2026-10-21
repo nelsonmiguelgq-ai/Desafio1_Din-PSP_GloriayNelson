@@ -35,11 +35,17 @@ telefono int not null,
 direccion varchar(100) not null
 );
 create table Producto(
-id_produc int auto_increment primary key,
-nombre varchar(100) not null
+id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(70) NOT NULL,
+    dimensiones VARCHAR(50),
+    proveedor VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(255),
+    cantidad_stock INT NOT NULL DEFAULT 0,
+    precio_venta DECIMAL(15, 2) NOT NULL DEFAULT 0.00,
+    precio_proveedor DECIMAL(15, 2) NOT NULL DEFAULT 0.00
 );
 create table Presupuesto(
-id_presupuesto INT AUTO_INCREMENT PRIMARY KEY,
+ id_presupuesto INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     codigo INT UNIQUE NOT NULL,
     fecha DATE NOT NULL,
@@ -57,4 +63,13 @@ CREATE TABLE Empleado (
     telefono VARCHAR(9),
     salario DECIMAL(8,2) NOT NULL DEFAULT 1200.00,
     activo BOOLEAN NOT NULL DEFAULT TRUE
+    );
+    create table producto_material(-- ESTE ES EL ERROR--
+     id_producto_material INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT NOT NULL,
+    id_material INT NOT NULL,
+    cantidad DECIMAL(10, 2) NOT NULL DEFAULT 1.00,
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+    FOREIGN KEY (id_material) REFERENCES material(id_material),
+    UNIQUE (id_producto, id_material)
     );
