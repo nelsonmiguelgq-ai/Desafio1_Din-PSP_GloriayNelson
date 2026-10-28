@@ -1,14 +1,19 @@
 create database BDatos_inicio;
 use BDatos_inicio;
 
-
-
-
 create table Tipos_Tarea(
 id_tip_tarea int auto_increment primary key,
 nombre varchar(100),
 precio_hora double not null
 );
+drop table tipos_tarea;
+drop table usuario;
+drop table cliente;
+drop table categoria;
+drop table producto;
+drop table prestamo;
+drop table presupuesto;
+drop table material;
 create table Usuario(
 id_usuario int auto_increment primary key,
 nombre varchar(100) unique not null ,
