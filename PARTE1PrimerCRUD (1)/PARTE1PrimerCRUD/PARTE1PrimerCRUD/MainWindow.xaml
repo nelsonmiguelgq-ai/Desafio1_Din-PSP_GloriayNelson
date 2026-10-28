@@ -1,0 +1,90 @@
+﻿<Window x:Class="PARTE1PrimerCRUD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PARTE1PrimerCRUD"
+        mc:Ignorable="d"
+        Title="MainWindow"  MinHeight="420"
+        MinWidth="700"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Gestión de estudiantes"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Margin="0,0,0,18"/>
+
+        <WrapPanel Grid.Row="1" Margin="0,0,0,15">
+            <Button Content="Actualizar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Actualizar_Click"/>
+
+            <Button Content="Insertar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Insertar_Click"/>
+
+            <Button Content="Modificar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Modificar_Click"/>
+
+            <Button Content="Eliminar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Eliminar_Click"/>
+        </WrapPanel>
+
+        <DataGrid x:Name="dgEstudiantes"
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  Background="Coral"
+                  AlternatingRowBackground="IndianRed">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    Width="60"/>
+
+                <DataGridTextColumn Header="Nombre"
+                                    Binding="{Binding Nombre}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Apellido"
+                                    Binding="{Binding Apellido}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Email"
+                                    Binding="{Binding Email}"
+                                    Width="2*"/>
+
+                <DataGridTextColumn Header="Fecha de nacimiento"
+                                    Binding="{Binding FechaNacimiento,
+                                      StringFormat={}{0:dd/MM/yyyy HH:mm}}"
+                                    Width="180"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="txtEstado"
+                   Grid.Row="3"
+                   Margin="0,12,0,0"
+                   Foreground="Gray"/>
+    </Grid>
+</Window>
