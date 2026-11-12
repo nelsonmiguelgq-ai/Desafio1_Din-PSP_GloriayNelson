@@ -1,0 +1,40 @@
+﻿<Window x:Class="Desafio_DI_PSP_NelsonG_GloriaC.producto"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestión de Productos y Materiales" Height="450" Width="850"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Inventario de Productos / Materiales" FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Recargar Productos" Width="130" Height="30" Click="BtnRecargar_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="NavProd"
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  Background="#E8F8F5"
+                  AlternatingRowBackground="#D1F2EB">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
+                <DataGridTextColumn Header="Tipo Material" Binding="{Binding TipoMaterial}" Width="100"/>
+                <DataGridTextColumn Header="Dimensiones" Binding="{Binding Dimensiones}" Width="100"/>
+                <DataGridTextColumn Header="Proveedor" Binding="{Binding Proveedor}" Width="120"/>
+                <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="60"/>
+                <DataGridTextColumn Header="Precio Venta" Binding="{Binding PrecioVenta, StringFormat=C}" Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="txtEstadoProductos" Grid.Row="3" Margin="0,10,0,0" Foreground="Gray"/>
+    </Grid>
+</Window>

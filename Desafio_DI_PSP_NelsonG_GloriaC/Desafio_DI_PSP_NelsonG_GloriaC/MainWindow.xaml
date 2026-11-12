@@ -1,0 +1,112 @@
+﻿<Window x:Class="Desafio_DI_PSP_NelsonG_GloriaC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desafio_DI_PSP_NelsonG_GloriaC"
+        mc:Ignorable="d"
+        Title="Sistema de Gestión - Empresa de Naves"  
+        MinHeight="450"
+        MinWidth="750"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título actualizado acorde al proyecto -->
+        <TextBlock Text="Panel de Gestión General"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Margin="0,0,0,18"/>
+
+        <!-- Panel de Botones (CRUD y Navegación) -->
+        <WrapPanel Grid.Row="1" Margin="0,0,0,15">
+            <Button Content="Actualizar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Actualizar_Click"/>
+
+            <Button Content="Insertar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Insertar_Click"/>
+
+            <Button Content="Modificar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Modificar_Click"/>
+
+            <Button Content="Eliminar"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Click="Eliminar_Click"/>
+
+            <!-- Separador visual o espacio extra -->
+            <!-- Botones nuevos para abrir las vistas de Clientes y Productos -->
+            <Button Content="Ir a Clientes"
+                    Width="110"
+                    Height="34"
+                    Margin="20,0,10,5"
+                    Background="#E0F7FA"
+                    Click="BtnClientes_Click"/>
+
+            <Button Content="Ir a Productos"
+                    Width="110"
+                    Height="34"
+                    Margin="0,0,10,5"
+                    Background="#E0F7FA"
+                    Click="BtnProductos_Click"/>
+        </WrapPanel>
+
+        <DataGrid x:Name="NavUsuario"
+          Grid.Row="2"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          SelectionMode="Single"
+          SelectionUnit="FullRow"
+          Background="Coral"
+          AlternatingRowBackground="IndianRed">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID Usuario"
+                            Binding="{Binding Id}"
+                            Width="80"/>
+
+                <DataGridTextColumn Header="Nombre"
+                            Binding="{Binding Nombre}"
+                            Width="*"/>
+
+                <DataGridTextColumn Header="NIF"
+                            Binding="{Binding Nif}"
+                            Width="120"/>
+
+                <DataGridTextColumn Header="Email"
+                            Binding="{Binding Email}"
+                            Width="2*"/>
+
+                <DataGridTextColumn Header="Teléfono"
+                            Binding="{Binding Telefono}"
+                            Width="100"/>
+
+                <DataGridTextColumn Header="Dirección"
+                            Binding="{Binding Direccion}"
+                            Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="txtEstado"
+                   Grid.Row="3"
+                   Margin="0,12,0,0"
+                   Foreground="Gray"/>
+    </Grid>
+</Window>
