@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj": {}
+    "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj": {
+    "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
+        "projectUniqueName": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
         "projectName": "PARTE1PrimerCRUD",
-        "projectPath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
+        "projectPath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
         "packagesPath": "C:\\Users\\csoto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\obj\\",
+        "outputPath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

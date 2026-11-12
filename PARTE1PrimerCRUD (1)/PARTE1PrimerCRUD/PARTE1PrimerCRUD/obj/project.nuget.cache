@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cEzTbNGmgqU=",
+  "dgSpecHash": "Ys+efvqheqs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\Desarrollo de interfases\\CRUD\\CODIGO_LIMPIO_CRUD_1_FUNCIONADO_CONECTADO_MySQL\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
+  "projectFilePath": "C:\\Users\\csoto\\OneDrive\\Escritorio\\A2DO\\PSP\\Git_Desafio1\\PARTE1PrimerCRUD (1)\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD\\PARTE1PrimerCRUD.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\csoto\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\csoto\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
