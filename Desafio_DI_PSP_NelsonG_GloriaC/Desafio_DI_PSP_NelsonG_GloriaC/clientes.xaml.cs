@@ -1,35 +1,60 @@
-﻿using System;
+﻿using Desafio_DI_PSP_NelsonG_GloriaC.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows;
 
 namespace Desafio_DI_PSP_NelsonG_GloriaC
 {
     public partial class clientes : Window
     {
-        private string conexion = "Server=localhost;Database=bdatos_inicio;Uid=root;Pwd=271020;";
+        private readonly IDbContextFactory<EscuelaBasicContext> _dbContextFactory;
+
 
         public clientes()
         {
             InitializeComponent();
-            CargarClientes();
+            _dbContextFactory = App.proveedorServicios.GetRequiredService<IDbContextFactory<EscuelaBasicContext>>();
+            _ = CargarClientesAsync();
+        }
+           
+
+  
+
+        private async void BtnRecargar_Click(object sender, RoutedEventArgs e)
+        {
+            await CargarClientesAsync();
         }
 
-        private void CargarClientes()
+        private async Task CargarClientesAsync()
         {
             try
             {
-                // Aquí harías tu consulta a la tabla Cliente de tu BD
-                // SELECT id_usuario AS Id, nombre AS Nombre, NIF AS Nif, email AS Email, telefono AS Telefono, direccion AS Direccion FROM Cliente
-                txtEstadoClientes.Text = "Clientes cargados correctamente.";
+                // Guardar el Id del cliente seleccionado para volver a seleccionarlo después
+                int? idSeleccionado = (Navclientes.SelectedItem as Cliente)?.IdUsuario;
+
+                using (var context = _dbContextFactory.CreateDbContext())
+                {
+                    // AsNoTracking: solo lectura, siempre trae lo que hay en la BD en este momento
+                    var listaClientes = await context.Clientes
+                                                     .AsNoTracking()
+                                                     .OrderBy(c => c.IdUsuario)
+                                                     .ToListAsync();
+
+                    Navclientes.ItemsSource = listaClientes;
+
+                    // Restaurar la selección si ese cliente sigue existiendo
+                    if (idSeleccionado != null)
+                        Navclientes.SelectedItem = listaClientes.FirstOrDefault(c => c.IdUsuario == idSeleccionado);
+
+                    txtEstadoClientes.Text = $"Datos actualizados ({listaClientes.Count} clientes) - {DateTime.Now:HH:mm:ss}";
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar clientes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                txtEstadoClientes.Text = "Error al conectar con la base de datos.";
+                System.Diagnostics.Debug.WriteLine($"Error al cargar los datos: {ex.Message}");
             }
-        }
-
-        private void BtnRecargar_Click(object sender, RoutedEventArgs e)
-        {
-            CargarClientes();
         }
     }
 }

@@ -1,5 +1,7 @@
 use bdatos_inicio;
 
+select * from clientes;
+
 DROP TABLE IF EXISTS Presupuesto_Detalle;
 DROP TABLE IF EXISTS Presupuesto;
 DROP TABLE IF EXISTS Cliente;
@@ -41,7 +43,7 @@ CREATE TABLE Usuario(
 
 
 CREATE TABLE Cliente(
-    id_usuario INT PRIMARY KEY,
+    id_usuario int AUTO_INCREMENT  PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     NIF VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(50) NOT NULL,

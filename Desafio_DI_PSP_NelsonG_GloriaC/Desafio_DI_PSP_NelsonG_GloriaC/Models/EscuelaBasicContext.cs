@@ -39,7 +39,7 @@ public partial class EscuelaBasicContext : DbContext
         {
             entity.HasKey(e => e.IdUsuario).HasName("PRIMARY");
 
-            entity.Property(e => e.IdUsuario).ValueGeneratedNever();
+            entity.Property(e => e.IdUsuario).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithOne(p => p.Cliente).HasConstraintName("fk_cliente_usuario");
         });
@@ -85,6 +85,9 @@ public partial class EscuelaBasicContext : DbContext
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.IdUsuario).HasName("PRIMARY");
+
+            // Añade esta línea para que coincida con la configuración de la clave primaria autoincremental
+            entity.Property(e => e.IdUsuario).ValueGeneratedOnAdd();
         });
 
         OnModelCreatingPartial(modelBuilder);

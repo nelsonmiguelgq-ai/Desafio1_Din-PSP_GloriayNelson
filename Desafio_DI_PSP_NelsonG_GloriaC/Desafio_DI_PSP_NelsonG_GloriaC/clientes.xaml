@@ -11,13 +11,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Listado de Clientes" FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
+        <TextBlock Text="Listado presupuesto" FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
             <Button Content="Recargar Datos" Width="110" Height="30" Click="BtnRecargar_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgClientes"
+        <DataGrid x:Name="Navclientes"
                   Grid.Row="2"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"

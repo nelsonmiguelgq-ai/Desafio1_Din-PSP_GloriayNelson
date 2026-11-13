@@ -68,7 +68,7 @@ namespace Desafio_DI_PSP_NelsonG_GloriaC {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Desafio_DI_PSP_NelsonG_GloriaC;component/producto.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Desafio_DI_PSP_NelsonG_GloriaC;V1.0.0.0;component/producto.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\producto.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

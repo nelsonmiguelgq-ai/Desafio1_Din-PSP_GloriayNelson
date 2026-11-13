@@ -93,9 +93,9 @@ namespace Desafio_DI_PSP_NelsonG_GloriaC
         }
 
         // --- BOTÓN ACTUALIZAR ---
-        private void Actualizar_Click(object sender, RoutedEventArgs e)
+        private async void Actualizar_Click(object sender, RoutedEventArgs e)
         {
-            _ = CargarDatostablaAsync();
+            await CargarDatostablaAsync();
         }
 
         // --- MÉTODO LEER ASÍNCRONO (Para no congelar el arranque) ---
@@ -103,74 +103,140 @@ namespace Desafio_DI_PSP_NelsonG_GloriaC
         {
             try
             {
-                using (var context =  _dbContextFactory.CreateDbContext())
-                {
-                    // Usamos ToListAsync para que la consulta corra en segundo plano
-                    var listaClientes = await context.Clientes.ToListAsync();
-                    NavUsuario.ItemsSource = listaClientes;
-                }
+                // Guardar el Id del cliente seleccionado para volver a seleccionarlo después
+                int? idSeleccionado = (NavUsuario.SelectedItem as Cliente)?.IdUsuario;
 
-                txtEstado.Text = "Datos cargados correctamente con EF Core.";
+                using (var context = _dbContextFactory.CreateDbContext())
+                {
+                    // AsNoTracking: solo lectura, siempre trae lo que hay en la BD en este momento
+                    var listaClientes = await context.Clientes
+                                                     .AsNoTracking()
+                                                     .OrderBy(c => c.IdUsuario)
+                                                     .ToListAsync();
+
+                    NavUsuario.ItemsSource = listaClientes;
+
+                    // Restaurar la selección si ese cliente sigue existiendo
+                    if (idSeleccionado != null)
+                        NavUsuario.SelectedItem = listaClientes.FirstOrDefault(c => c.IdUsuario == idSeleccionado);
+
+                    txtEstado.Text = $"Datos actualizados ({listaClientes.Count} clientes) - {DateTime.Now:HH:mm:ss}";
+                }
             }
             catch (Exception ex)
             {
-                // Si la BD falla al iniciar, la ventana ya está abierta y te avisa sin cerrarse de golpe
                 txtEstado.Text = "Error al conectar con la base de datos.";
                 System.Diagnostics.Debug.WriteLine($"Error al cargar los datos: {ex.Message}");
             }
         }
 
         // --- BOTÓN INSERTAR ---
-        private void Insertar_Click(object sender, RoutedEventArgs e)
+        private async void Insertar_Click(object sender, RoutedEventArgs e)
         {
-            Formulario panta = new Formulario();
-            if (panta.ShowDialog() == true)
+            var form = new Formulario();
+
+            if (form.ShowDialog() == true)
             {
-                _ = CargarDatostablaAsync();
-                txtEstado.Text = "Cliente insertado con éxito.";
+                await CargarDatostablaAsync(); // Recarga la tabla limpiamente
             }
+
         }
 
+        
         // --- BOTÓN MODIFICAR ---
-        private void Modificar_Click(object sender, RoutedEventArgs e)
+        private async void Modificar_Click(object sender, RoutedEventArgs e)
         {
-            if (NavUsuario.SelectedItem != null)
+            if (NavUsuario.SelectedItem is not Cliente cliente)
             {
-                MessageBox.Show("Modificando elemento seleccionado", "Modificar", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Seleccione correctamente el elemento de la lista", "Aviso",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            else
+
+            // Confirma cualquier edición pendiente antes de leer el objeto
+            NavUsuario.CommitEdit(DataGridEditingUnit.Row, true);
+            if (string.IsNullOrWhiteSpace(cliente.Nombre) ||
+                string.IsNullOrWhiteSpace(cliente.Nif) ||
+                string.IsNullOrWhiteSpace(cliente.Email) ||
+                string.IsNullOrWhiteSpace(cliente.Direccion))
             {
-                MessageBox.Show("Seleccione correctamente el elemento de la lista", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Nombre, NIF, Email y Dirección no pueden estar vacíos.", "Aviso",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                await CargarDatostablaAsync();
+                return;
+            }
+
+            try
+            {
+                
+                    using (var context = _dbContextFactory.CreateDbContext())
+                {
+                    // Update marca todos los campos del objeto como modificados
+                    context.Clientes.Update(cliente);
+                    await context.SaveChangesAsync();
+                }
+
+                await CargarDatostablaAsync();
+                txtEstado.Text = "Cliente modificado correctamente en la BD.";
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show(
+                    "No se pudo modificar. Puede que el NIF ya exista en otro cliente.\n\n" +
+                    ex.InnerException?.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                await CargarDatostablaAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al modificar: {ex.Message}", "Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                await CargarDatostablaAsync();
             }
         }
 
         // --- BOTÓN ELIMINAR ---
-        private void Eliminar_Click(object sender, RoutedEventArgs e)
+        private async void Eliminar_Click(object sender, RoutedEventArgs e)
         {
-            if (NavUsuario.SelectedItem != null)
+            try
             {
-                MessageBoxResult resultado = MessageBox.Show("¿Estás seguro de que deseas eliminar este registro de la base de datos?",
-                                                             "Confirmar eliminación",
-                                                             MessageBoxButton.YesNo,
-                                                             MessageBoxImage.Warning);
+                var cliente = (Cliente)NavUsuario.SelectedItem;
 
-                if (resultado == MessageBoxResult.Yes)
+                using (var context = _dbContextFactory.CreateDbContext())
                 {
-                    try
-                    {
-                        _ = CargarDatostablaAsync();
-                        txtEstado.Text = "Registro eliminado correctamente de la BD.";
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error al eliminar el registro: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    // Borra el Usuario; MySQL elimina en cascada Cliente -> Presupuestos -> Detalles
+                    await context.Usuarios
+                                 .Where(u => u.IdUsuario == cliente.IdUsuario)
+                                 .ExecuteDeleteAsync();
                 }
+
+                await CargarDatostablaAsync();
+                txtEstado.Text = "Usuario eliminado correctamente de la BD.";
             }
-            else
+            catch (DbUpdateException ex)
             {
-                MessageBox.Show("Por favor, selecciona un elemento para eliminar.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    "No se pudo eliminar. Es posible que el usuario tenga datos relacionados (pedidos, etc.).\n\n" +
+                    ex.InnerException?.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar el usuario: {ex.Message}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void BtnPresupuestos_Click(object sender, RoutedEventArgs e)
+        {
+
+            var presu = new WindowPresupuestos();
+
+            if (presu.ShowDialog() == true)
+            {
+                await CargarDatostablaAsync(); // Recarga la tabla limpiamente
+            }
+
         }
     }
 }
